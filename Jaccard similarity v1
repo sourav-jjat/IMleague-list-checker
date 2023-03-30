@@ -1,0 +1,35 @@
+from itertools import combinations
+
+# Define n lists of names
+names = [["Alice", "Bob", "Charlie", "David"],
+         ["Alice", "Bob", "Eve", "Frank"],
+         ["Bob", "Charlie", "David", "Eve", "Frank"],
+         ["Charlie", "David", "Eve", "Frank", "Grace"]]
+
+n = len(names)
+
+# Define a function to calculate Jaccard similarity
+def jaccard_similarity(set1, set2):
+    intersection = set1.intersection(set2)
+    union = set1.union(set2)
+    return len(intersection) / len(union)
+
+# Create a list of all pairs of lists
+list_pairs = list(combinations(range(n), 2))
+
+# Compute Jaccard similarity between each pair of lists
+similar_lists = []
+for pair in list_pairs:
+    set1 = set(names[pair[0]])
+    set2 = set(names[pair[1]])
+    score = jaccard_similarity(set1, set2)
+    if score > 0.7:
+        similar_lists.append(pair)
+
+# Print the pairs of lists with similarity above 0.7
+if similar_lists:
+    print("The following pairs of lists have similarity above 0.7:")
+    for pair in similar_lists:
+        print(f"List{pair[0]+1} and List{pair[1]+1}")
+else:
+    print("No pairs of lists have similarity above 0.7.")
